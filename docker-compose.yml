@@ -1,0 +1,27 @@
+services:
+  portal-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8055:80" 
+    volumes:
+      - ./datadrive:/datadrive
+    networks:
+      - app-network
+
+  mysql-db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: mysecretpassword
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: myuserpassword
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
